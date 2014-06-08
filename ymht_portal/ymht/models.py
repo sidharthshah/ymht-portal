@@ -108,17 +108,24 @@ class Membership(models.Model):
   since = models.DateField()
   till = models.DateField()
 
+EVENT_CATEGORY_CHOICES = ((0, 'GNC Day'),
+                    (1, 'Summer Camp'),
+                    (2, 'YUVA Camp'),
+                    (3, 'Aptaputra Satsang'),
+                    (4, 'General Satsang'),
+                    (5, 'Parayan'),
+                    (6, 'Janm Jayanti'),
+                    (7, 'Picnic'))
+
 class Event(models.Model):
-  CATEGORY_CHOICES = ((1, 'Summer Camp'),
-                      (2, 'YUVA Camp'),
-                      (3, 'Parayan'),
-                      (4, 'Janm Jayanti'))
+
+
   held_on = models.DateField()
-  category = models.IntegerField(choices=CATEGORY_CHOICES)
+  category = models.IntegerField(choices=EVENT_CATEGORY_CHOICES)
   location = models.ForeignKey(City)
 
   def __unicode__(self):
-    return '%s: %s, %s' % (self.category, self.held_on, self.location)
+    return '%s: %s, %s' % (dict(EVENT_CATEGORY_CHOICES).get(self.category), self.held_on, self.location)
 
 class SevaDetails(models.Model):
   ATTENDED_DETAILS = ((1, 'All Days'), (2, 'Partial Days'))

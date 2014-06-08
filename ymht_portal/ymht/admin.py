@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import (YMHT, Coordinator, YMHTMobile,
                     YMHTEmail, YMHTAddress, City,
-                    State, Country, Center, Membership, SevaDetails)
+                    State, Country, Center, Membership,
+                    Event, SevaDetails)
 
 class YMHTMobileInline(admin.TabularInline):
     model = YMHTMobile
@@ -21,6 +22,7 @@ class YMHTSevaDetailsInline(admin.TabularInline):
     model = SevaDetails
 
 class YMHTAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'date_of_birth', 'gnan_date')
     inlines = [
         YMHTMobileInline,
         YMHTEmailInline,
@@ -32,6 +34,8 @@ class YMHTAdmin(admin.ModelAdmin):
 admin.site.register(Country)
 admin.site.register(State)
 admin.site.register(City)
+
+admin.site.register(Event)
 
 admin.site.register(Center)
 admin.site.register(YMHT, YMHTAdmin)
