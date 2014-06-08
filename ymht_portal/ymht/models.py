@@ -28,6 +28,43 @@ class YMHTEmail(models.Model):
   email = models.EmailField()
   is_active = models.BooleanField(default=False)
 
+class Country(models.Model):
+  name = models.CharField(max_length=255)
+
+  def __unicode__(self):
+    return self.name
+
+  class Meta:
+    verbose_name_plural = 'Countries'
+
+class State(models.Model):
+  name = models.CharField(max_length=255)
+  country = models.ForeignKey(Country)
+
+  def __unicode__(self):
+    return '%s, %s' % (self.name, self.country)
+
+
+class City(models.Model):
+  name = models.CharField(max_length=255)
+  state = models.ForeignKey(State)
+
+  def __unicode__(self):
+    return '%s, %s' % (self.name, self.state.name)
+
+  class Meta:
+    verbose_name_plural = 'Cities'
+
+class YMHTAddress(models.Model):
+  ymht = models.ForeignKey(YMHT)
+  address_1 = models.CharField(max_length=255)
+  address_2 = models.CharField(max_length=255, blank=True, null=True)
+  address_3 = models.CharField(max_length=255, blank=True, null=True)
+  landmark = models.CharField(max_length=255, blank=True, null=True)
+  city = models.ForeignKey(City)
+  zipcode = models.CharField(max_length=6)
+  is_active = models.BooleanField(default=False)
+
 class Coordinator(models.Model):
   first_name = models.CharField(max_length=255)
   last_name = models.CharField(max_length=255)
@@ -35,3 +72,38 @@ class Coordinator(models.Model):
   date_of_birth = models.DateField()
   gnan_date = models.DateField(blank=True, null=True)
 
+class Center(models.Model):
+  CATEGORY_CHOICES = ((1, 'BMHT'),
+                      (2, 'LMHT'),
+                      (3, 'YMHT'))
+  category = models.IntegerField(choices=CATEGORY_CHOICES)
+  coordinators = models.ManyToManyField(Coordinator)
+  established_since = models.DateField()
+  locality = models.CharField(max_length=255)
+  address_1 = models.CharField(max_length=255)
+  address_2 = models.CharField(max_length=255, blank=True, null=True)
+  address_3 = models.CharField(max_length=255, blank=True, null=True)
+  landmark = models.CharField(max_length=255, blank=True, null=True)
+  city = models.ForeignKey(City)
+  zipcode = models.CharField(max_length=6)
+
+  def __unicode__(self):
+    return '%s, %s' % (self.locality, self.city)
+
+class Membership(models.Model):
+  ROLE_CHOICES = ((1, 'Participant'),
+                  (2, 'Coordinator'),
+                  (3, 'Helper'))
+
+  AGE_GROUP_CHOICES = ((1, '13 to 16'),
+                       (2, '17 to 21'),
+                       (3, '13 to 21'),
+                       (4, '21 to 30'))
+
+  ymht = models.ForeignKey(YMHT)
+  coordinator = models.ForeignKey(Coordinator)
+  center = models.ForeignKey(Center)
+  age_group = models.IntegerField(choices=AGE_GROUP_CHOICES)
+  role = models.IntegerField(choices=ROLE_CHOICES)
+  since = models.DateField()
+  till = models.DateField()
