@@ -107,3 +107,27 @@ class Membership(models.Model):
   role = models.IntegerField(choices=ROLE_CHOICES)
   since = models.DateField()
   till = models.DateField()
+
+class Event(models.Model):
+  CATEGORY_CHOICES = ((1, 'Summer Camp'),
+                      (2, 'YUVA Camp'),
+                      (3, 'Parayan'),
+                      (4, 'Janm Jayanti'))
+  held_on = models.DateField()
+  category = models.IntegerField(choices=CATEGORY_CHOICES)
+  location = models.ForeignKey(City)
+
+  def __unicode__(self):
+    return '%s: %s, %s' % (self.category, self.held_on, self.location)
+
+class SevaDetails(models.Model):
+  ATTENDED_DETAILS = ((1, 'All Days'), (2, 'Partial Days'))
+  event = models.ForeignKey(Event)
+  ymht = models.ForeignKey(YMHT)
+  coordinator = models.ForeignKey(Coordinator)
+  attended = models.IntegerField(choices=ATTENDED_DETAILS)
+  attended_days = models.IntegerField(blank=True, null=True)
+  comments = models.CharField(max_length=100, blank=True, null=True)
+
+  class Meta:
+    verbose_name_plural = 'Seva Details'
