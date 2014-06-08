@@ -1,3 +1,4 @@
 Django==1.5.1
 South==0.8.1
+django-admin-bootstrapped==1.6.5
 wsgiref==0.1.2
