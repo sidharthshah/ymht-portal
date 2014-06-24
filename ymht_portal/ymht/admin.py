@@ -16,7 +16,7 @@ class YMHTAddressInline(admin.TabularInline):
     model = YMHTAddress
 
 class YMHTMembershipInline(admin.TabularInline):
-    fields = ('ymht' , 'center' , 'age_group' , 'role', 'since', 'till')
+    fields = ('ymht' , 'center' , 'coordinator', 'age_group' , 'role', 'since', 'till')
     model = Membership
 
 class YMHTSevaDetailsInline(admin.TabularInline):
