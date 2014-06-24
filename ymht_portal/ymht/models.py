@@ -72,6 +72,9 @@ class Coordinator(models.Model):
   date_of_birth = models.DateField()
   gnan_date = models.DateField(blank=True, null=True)
 
+  def __unicode__(self):
+    return '%s %s' % (self.first_name, self.last_name)
+
 class Center(models.Model):
   CATEGORY_CHOICES = ((1, 'BMHT'),
                       (2, 'LMHT'),

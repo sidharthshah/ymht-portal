@@ -4,6 +4,8 @@ from .models import (YMHT, Coordinator, YMHTMobile,
                     State, Country, Center, Membership,
                     Event, SevaDetails)
 
+from center.models import *
+
 class YMHTMobileInline(admin.TabularInline):
     model = YMHTMobile
 
@@ -22,6 +24,7 @@ class YMHTSevaDetailsInline(admin.TabularInline):
     model = SevaDetails
 
 class YMHTAdmin(admin.ModelAdmin):
+    exclude = ('user',)
     list_display = ('first_name', 'last_name', 'date_of_birth', 'gnan_date')
     inlines = [
         YMHTMobileInline,
@@ -31,12 +34,18 @@ class YMHTAdmin(admin.ModelAdmin):
         YMHTSevaDetailsInline
     ]
 
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.user = request.user 
+            obj.save()
+            
 admin.site.register(Country)
 admin.site.register(State)
 admin.site.register(City)
-
 admin.site.register(Event)
-
 admin.site.register(Center)
 admin.site.register(YMHT, YMHTAdmin)
 admin.site.register(Coordinator)
+admin.site.register(Membership)
+admin.site.register(Attendance)
+
