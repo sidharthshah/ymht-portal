@@ -63,7 +63,7 @@ MEDIA_URL = '/'
 # Example: "/var/www/example.com/static/"
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
-STATIC_ROOT = ''
+STATIC_ROOT = '/home/ubuntu/ymht-portal/ymht_portal/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
