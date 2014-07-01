@@ -57,5 +57,4 @@ admin.site.register(Hobby)
 admin.site.register(YMHT, YMHTAdmin)
 admin.site.register(Coordinator)
 admin.site.register(Membership)
-admin.site.register(Attendance)
 
