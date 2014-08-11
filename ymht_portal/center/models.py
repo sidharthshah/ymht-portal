@@ -2,10 +2,10 @@ from django.db import models
 from ymht.models import Center, YMHT, Coordinator
 
 def session_content_file_name(instance, filename):
-    return '/'.join(['session', instance.user.username, filename])
+    return '/'.join(['session', instance.reported_by.user.username, filename])
 
 def session_media_content_file_name(instance, filename):
-    return '/'.join(['session_media', instance.user.username, filename])
+    return '/'.join(['session_media', instance.session.reported_by.user.username, filename])
 
 class Session(models.Model):
   center = models.ForeignKey(Center)
