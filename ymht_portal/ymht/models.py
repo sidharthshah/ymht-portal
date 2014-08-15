@@ -71,7 +71,7 @@ class YMHT(models.Model):
   father_contact = models.CharField(max_length=10, blank=True, null=True)
   mother_name = models.CharField(max_length=255)
   mother_contact = models.CharField(max_length=10, blank=True, null=True)
-  profile_picture = models.ImageField(upload_to=session_content_file_name, blank=True, null=True)
+#  profile_picture = models.ImageField(upload_to=session_content_file_name, blank=True, null=True)
 
   def __unicode__(self):
     return '%s %s' % (self.first_name, self.last_name)
